@@ -44,14 +44,17 @@ public class WebSearchModel {
         }
     }
 
-    // ALTERADO: O método de registro agora aceita um QueryFilter e usa a nova lista.
     public void addQueryObserver(QueryObserver queryObserver, QueryFilter filter) {
         observerEntries.add(new ObserverEntry(queryObserver, filter));
     }
 
-    // MANUTENÇÃO TEMPORÁRIA: Este método será corrigido no Passo 4.
+    // ALTERADO: Implementa a lógica de filtragem (Strategy)
     private void notifyAllObservers(String line) {
-        // Por enquanto, apenas iteramos sobre a nova estrutura, sem lógica de filtro.
-        // for (ObserverEntry entry : observerEntries) { entry.observer.onQuery(line); }
+        for (ObserverEntry entry : observerEntries) {
+            // APLICANDO A ESTRATÉGIA: só notifica se o filtro permitir
+            if (entry.filter.shouldNotify(line)) {
+                entry.observer.onQuery(line);
+            }
+        }
     }
 }
