@@ -1,3 +1,5 @@
+package websearch; // Adicionado
+
 /**
  * Watches the search queries
  */

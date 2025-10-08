@@ -1,3 +1,5 @@
+package websearch; // Adicionado
+
 import java.io.File;
 
 /**
@@ -5,8 +7,8 @@ import java.io.File;
  */
 public class Main {
     public static void main(String[] args) {
-        // Source file (in the project's data/ folder)
-        File inputTextFile = new File("data/Hamlet.txt");
+        // O caminho foi ajustado para refletir a localização de Hamlet.txt na raiz da pasta src
+        File inputTextFile = new File("src/Hamlet.txt"); 
 
         // Build object graph
         WebSearchModel model = new WebSearchModel(inputTextFile);
