@@ -8,7 +8,7 @@ import java.util.List;
  * Perform "web search" (from a  file), notify the interested observers of each query.
  */
 public class WebSearchModel {
-    // NOVO: Classe interna para agrupar o Observer com sua Strategy (QueryFilter)
+    // Classe interna para agrupar o Observer com sua Strategy (QueryFilter)
     private static class ObserverEntry {
         final QueryObserver observer;
         final QueryFilter filter;
@@ -18,9 +18,8 @@ public class WebSearchModel {
             this.filter = filter;
         }
     }
-    
+
     private final File sourceFile;
-    // ALTERADO: A lista de observadores é agora uma lista de ObserverEntry
     private final List<ObserverEntry> observerEntries = new ArrayList<>();
 
     public interface QueryObserver {
@@ -45,12 +44,11 @@ public class WebSearchModel {
         }
     }
 
-    // MANUTENÇÃO TEMPORÁRIA: Este método será corrigido no Passo 3.
-    // O método original não é mais funcional com a nova estrutura interna.
-    public void addQueryObserver(QueryObserver queryObserver) {
-        // ... (Este método não pode mais funcionar. Será reescrito no Passo 3.)
+    // ALTERADO: O método de registro agora aceita um QueryFilter e usa a nova lista.
+    public void addQueryObserver(QueryObserver queryObserver, QueryFilter filter) {
+        observerEntries.add(new ObserverEntry(queryObserver, filter));
     }
-    
+
     // MANUTENÇÃO TEMPORÁRIA: Este método será corrigido no Passo 4.
     private void notifyAllObservers(String line) {
         // Por enquanto, apenas iteramos sobre a nova estrutura, sem lógica de filtro.
