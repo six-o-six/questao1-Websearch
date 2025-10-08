@@ -9,9 +9,7 @@ public class Snooper {
     public Snooper(WebSearchModel model) {
         this.model = model;
 
-        // REMOVIDO: O observador original foi removido, pois a assinatura do addQueryObserver mudou.
-
-        // NOVO: 1. Observador para consultas que contêm 'friend' (case-insensitive)
+        // 1. Observador para consultas que contêm 'friend' (case-insensitive)
         WebSearchModel.QueryObserver friendObserver = new WebSearchModel.QueryObserver() {
             @Override
             public void onQuery(String query) {
@@ -27,9 +25,25 @@ public class Snooper {
             }
         };
         
-        // Registra o observador e seu filtro usando a nova API
         model.addQueryObserver(friendObserver, friendFilter);
 
-        // O segundo observador será adicionado no Passo 6
+
+        // NOVO: 2. Observador para consultas com mais de 60 caracteres
+        WebSearchModel.QueryObserver longQueryObserver = new WebSearchModel.QueryObserver() {
+            @Override
+            public void onQuery(String query) {
+                System.out.println("So long " + query);
+            }
+        };
+
+        QueryFilter longQueryFilter = new QueryFilter() {
+            @Override
+            public boolean shouldNotify(String query) {
+                // Estratégia 2: Comprimento maior que 60 caracteres
+                return query.length() > 60;
+            }
+        };
+
+        model.addQueryObserver(longQueryObserver, longQueryFilter);
     }
 }
